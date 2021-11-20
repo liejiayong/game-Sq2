@@ -1,0 +1,23 @@
+/*
+ * @Description: 2048类游戏
+ * @version: 0.1.0
+ * @Author: liejiayong(809206619@qq.com)
+ * @Date: 2021-11-17 11:54:01
+ * @github url: https://github.com/liejiayong/game-Sq2
+ * @LastEditors: liejiayong(809206619@qq.com)
+ * @LastEditTime: 2021-11-20 19:20:38
+ * @FilePath: \tool-library\plugin\js-game-sq1024\dependencies.txt
+    -----------------
+    |   |   |   |   |
+    -----------------
+    |   |   |   |   |
+    -----------------
+    |   |   |   |   |
+    -----------------
+    |   |   |   |   |
+    -----------------
+  the square of 2
+
+  arr = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] => gridHeight * gridWidth - 1
+  pos2coord {x: num%gridWidth , y: ~~(num/gridWidth)}
+ */
