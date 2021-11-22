@@ -5,7 +5,7 @@
  * @Date: 2021-11-17 11:54:01
  * @github url: https://github.com/liejiayong/game-Sq2
  * @LastEditors: liejiayong(809206619@qq.com)
- * @LastEditTime: 2021-11-20 17:01:29
+ * @LastEditTime: 2021-11-22 10:47:36
  * @FilePath: \tool-library\plugin\js-game-sq1024\src\index.js
     -----------------
     |   |   |   |   |
@@ -60,7 +60,7 @@ var config = {
   gridSizeWidth: /* 格子宽 */ 100,
   gridSizeHeight: /* 格子高 */ 100,
   gridGap: /* 间隙 */ 20,
-  showGridValue: true /* 展示方法数字 */,
+  showGridValue: true /* 展示方块数字。方块DOM是否展示文本，文本为grids每一项的value */,
   /* 类命名空间 */
   cls: {
     grid: 'game-grid',

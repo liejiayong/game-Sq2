@@ -2,7 +2,7 @@
 
 1024 类型游戏 JavaScript 原生插件 [效果预览](https://codepen.io/liejiayong/pen/KKvYRab)
 
-由于公司业务需要，随便将 1024 游戏封装为插件，方便后面复用~
+由于公司业务需要，于是将 1024 类型游戏封装为插件，方便日后复用~
 
 ## 特性
 
@@ -39,13 +39,20 @@ npm i scratchers -S
 最后创建实例对象
 
 ```js
-// 本比例运算为解决移动端devicePixelRatio问题，按照设备实际尺寸来设置方块
+// 如果是移动端。本比例运算为解决移动端devicePixelRatio问题，按照设备实际尺寸来设置方块。现以移动端视觉稿宽为750为例进行换算，如：
 var winWidth = $(window).width(),
   width = (winWidth / 7.5) * 1.52 /* 获取方块实际长度 */,
   height = (winWidth / 7.5) * 1.44 /* 获取方块实际高度 */,
   gap = (winWidth / 7.5) * 0.06; /* 获取方块实际间隔 */
 width = Number(width.toFixed(2));
 gap = Number(gap.toFixed(2));
+
+// 如果是pc web端。使用视觉稿实际尺寸即可，如：
+var width = 20,
+  height = 20,
+  gap = 20;
+
+/* 上述移动端、pc web端二选一，根据实际情况来设置width、height、gap尺寸 */
 
 // 初始化
 var sq2Install = new Sq2(document.querySelector('#gamePanel'), {
@@ -58,78 +65,193 @@ var sq2Install = new Sq2(document.querySelector('#gamePanel'), {
   onFinish: function () {
     console.log('>>>游戏结束钩子函数');
   },
-  showGridValue: false /* 方块DOM是否展示文本，文本为grids每一项的value */,
+  showGridValue: true /* 方块DOM是否展示文本，文本为grids每一项的value */,
   cls: {
     grid: 'game-grid' /* 方块通用类名 */,
     gridTpl: 'grid_' /* 动态方块类名prifix，用于记录方块的坐标 */,
   },
-  grids: /* 方块状态 */ [
+  /*
+  方块状态。
+  假设grids的每个方块为gird，
+  因此单个gird为{ level: 0, value: 2, class: 'ico-g2', style: { 'background-color': 'rgb(166 78 221)', color: 'rgb(255,247,235)' } }
+
+  对于每个方块的背景设置2中情景：
+  情景一：使用class类名设置背景
+  情景二：使用style内联样式设置背景
+
+  上述情景二选一
+
+  */
+  grids: [
     { level: 0, value: 2, class: 'ico-g2' },
     {
       level: 1,
       value: 4,
-      class: 'ico-g4' /* 方块类名，用于方块为图片的情景 */,
+      style: {
+        'background-color': 'rgb(166 78 221)',
+        color: 'rgb(255,247,235)',
+      } /* 方块类名，用于方块设置内联样式的情景 */,
+      // class: 'ico-g4', /* 方块类名，用于方块设置类名的情景 */,
     },
     {
       level: 2,
       value: 8,
-      class: 'ico-g8',
+      style: { 'background-color': 'rgb(242,177,121)', color: 'rgb(255,247,235)' },
+      // class: 'ico-g8',
     },
     {
       level: 3,
       value: 16,
-      class: 'ico-g16',
+      style: { 'background-color': 'rgb(245,149,99)', color: 'rgb(255,247,235)' },
+      // class: 'ico-g16',
     },
     {
       level: 4,
       value: 32,
-      class: 'ico-g32',
+      style: { 'background-color': 'rgb(237,93,59)', color: 'rgb(255,247,235)' },
+      // class: 'ico-g32',
     },
     {
       level: 5,
       value: 64,
-      class: 'ico-g64',
+      style: { 'background-color': 'rgb(236,206,112)', color: 'rgb(255,247,235)' },
+      // class: 'ico-g64',
     },
     {
       level: 6,
       value: 128,
-      class: 'ico-g128',
+      style: { 'background-color': 'rgb(237,204,97)', color: 'rgb(255,247,235)' },
+      // class: 'ico-g128',
     },
     {
       level: 7,
       value: 256,
-      class: 'ico-g256',
+      style: { 'background-color': 'rgb(236,200,80)', color: 'rgb(255,247,235)' },
+      // class: 'ico-g256',
     },
     {
       level: 8,
       value: 512,
-      class: 'ico-g512',
+      style: { 'background-color': 'rgb(237,197,63)', color: 'rgb(255,247,235)' },
+      // class: 'ico-g512',
     },
     {
       level: 9,
       value: 1024,
-      class: 'ico-g1024',
+      tyle: { 'background-color': 'rgb(238,194,46)', color: 'rgb(255,247,235)' },
+      // class: 'ico-g1024',
     },
     {
       level: 10,
       value: 2048,
-      class: 'ico-g2048',
+      style: { 'background-color': 'rgb(61,58,51)', color: 'rgb(255,247,235)' },
+      // class: 'ico-g2048',
     },
     {
       level: 11,
       value: 4096,
-      class: 'ico-g4096',
+      style: { 'background-color': 'rgb(141 144 251)', color: 'rgb(255,247,235)' },
+      // class: 'ico-g4096',
     },
     {
       level: 12,
       value: 8192,
-      class: 'ico-g8192',
+      style: { 'background-color': 'rgb(166 78 221)', color: 'rgb(255,247,235)' },
+      // class: 'ico-g8192',
     },
   ],
+  animateSpeed: 300,
 });
 ```
 
 ## API
+
+### Sq2(el, config)
+
+构造函数 Sq2 需要配置挂载元素 el 和配置项 config
+
+配置项默认参数如下
+
+```js
+{
+  gridWidth: /* 列 */ 4,
+  gridHeight: /* 行 */ 4,
+  gridSizeWidth: /* 格子宽 */ 100,
+  gridSizeHeight: /* 格子高 */ 100,
+  gridGap: /* 间隙 */ 20,
+  showGridValue: true /* 展示方块数字。方块DOM是否展示文本，文本为grids每一项的value */,
+  /* 类命名空间 */
+  cls: {
+    grid: 'game-grid',
+    gridTpl: 'grid_',
+  },
+  //grids的数组 方便修改 复用性强
+  grids: [
+    { level: 0, value: 2, style: { 'background-color': 'rgb(238,228,218)', color: 'black' } },
+    {
+      level: 1,
+      value: 4,
+      style: { 'background-color': 'rgb(238,224,200)', color: 'rgb(124,115,106)' },
+    },
+    {
+      level: 2,
+      value: 8,
+      style: { 'background-color': 'rgb(242,177,121)', color: 'rgb(255,247,235)' },
+    },
+    {
+      level: 3,
+      value: 16,
+      style: { 'background-color': 'rgb(245,149,99)', color: 'rgb(255,247,235)' },
+    },
+    {
+      level: 4,
+      value: 32,
+      style: { 'background-color': 'rgb(237,93,59)', color: 'rgb(255,247,235)' },
+    },
+    {
+      level: 5,
+      value: 64,
+      style: { 'background-color': 'rgb(236,206,112)', color: 'rgb(255,247,235)' },
+    },
+    {
+      level: 6,
+      value: 128,
+      style: { 'background-color': 'rgb(237,204,97)', color: 'rgb(255,247,235)' },
+    },
+    {
+      level: 7,
+      value: 256,
+      style: { 'background-color': 'rgb(236,200,80)', color: 'rgb(255,247,235)' },
+    },
+    {
+      level: 8,
+      value: 512,
+      style: { 'background-color': 'rgb(237,197,63)', color: 'rgb(255,247,235)' },
+    },
+    {
+      level: 9,
+      value: 1024,
+      style: { 'background-color': 'rgb(238,194,46)', color: 'rgb(255,247,235)' },
+    },
+    {
+      level: 10,
+      value: 2048,
+      style: { 'background-color': 'rgb(61,58,51)', color: 'rgb(255,247,235)' },
+    },
+    {
+      level: 11,
+      value: 4096,
+      style: { 'background-color': 'rgb(141 144 251)', color: 'rgb(255,247,235)' },
+    },
+    {
+      level: 12,
+      value: 8192,
+      style: { 'background-color': 'rgb(166 78 221)', color: 'rgb(255,247,235)' },
+    },
+  ],
+  animateSpeed: 300,
+}
+```
 
 ### Sq2.prototype.start()
 
