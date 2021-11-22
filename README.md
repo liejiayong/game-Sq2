@@ -1,6 +1,6 @@
 # Sq2
 
-1024 类型游戏 JavaScript 原生插件 [效果预览](http://qianduan.253923.com/ljy/202111181001)
+1024 类型游戏 JavaScript 原生插件 [效果预览](https://codepen.io/liejiayong/pen/KKvYRab)
 
 由于公司业务需要，随便将 1024 游戏封装为插件，方便后面复用~
 
